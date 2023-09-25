@@ -24,18 +24,6 @@ const translateHandler = async () => {
   }
 
   let translation = parsed.translation;
-  //Wrap translated words with span tag
-  if (translation != "Everything looks good to me!") {
-    for (let word of parsed.translatedPhrases) {
-      let regexWord = new RegExp(word, "g");
-      translation = translation.replace(
-        regexWord,
-        `<span class="highlight">` + word + "</span>"
-      );
-    }
-  } else {
-    translation = parsed.translation;
-  }
 
   translatedArea.innerHTML = translation;
   return;

@@ -6,11 +6,11 @@ const Translator = require("../components/translator.js");
 let translator = new Translator();
 let translation;
 
-function wrapSpanTag(translation, translatedPhrases) {
-  for (let word of translatedPhrases) {
+function unwrapSpanTag(translation) {
+  if (/(<span class="highlight">|<\/span>)/.test(translation)) {
     translation = translation.replace(
-      word,
-      `<span class="highlight">` + word + "</span>"
+      /(<span class="highlight">|<\/span>)/g,
+      ""
     );
   }
   return translation;
@@ -23,6 +23,7 @@ suite("Unit Tests", () => {
       "Mangoes are my favorite fruit.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "Mangoes are my favourite fruit.");
   });
 
@@ -32,6 +33,7 @@ suite("Unit Tests", () => {
       "I ate yogurt for breakfast.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "I ate yoghurt for breakfast.");
   });
 
@@ -41,6 +43,7 @@ suite("Unit Tests", () => {
       "We had a party at my friend's condo.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "We had a party at my friend's flat."
@@ -53,6 +56,7 @@ suite("Unit Tests", () => {
       "Can you toss this in the trashcan for me?",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "Can you toss this in the bin for me?"
@@ -65,6 +69,7 @@ suite("Unit Tests", () => {
       "The parking lot was full.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "The car park was full.");
   });
 
@@ -74,6 +79,7 @@ suite("Unit Tests", () => {
       "Like a high tech Rube Goldberg machine.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "Like a high tech Heath Robinson device."
@@ -86,6 +92,7 @@ suite("Unit Tests", () => {
       "To play hooky means to skip class or work.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "To bunk off means to skip class or work."
@@ -98,6 +105,7 @@ suite("Unit Tests", () => {
       "No Mr. Bond, I expect you to die.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "No Mr Bond, I expect you to die.");
   });
 
@@ -107,6 +115,7 @@ suite("Unit Tests", () => {
       "Dr. Grosh will see you now.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "Dr Grosh will see you now.");
   });
 
@@ -116,6 +125,7 @@ suite("Unit Tests", () => {
       "Lunch is at 12:15 today.",
       "american-to-british"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "Lunch is at 12.15 today.");
   });
 
@@ -125,6 +135,7 @@ suite("Unit Tests", () => {
       "We watched the footie match for a while.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "We watched the soccer match for a while."
@@ -137,6 +148,7 @@ suite("Unit Tests", () => {
       "Paracetamol takes up to an hour to work.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "Tylenol takes up to an hour to work."
@@ -149,6 +161,7 @@ suite("Unit Tests", () => {
       "First, caramelise the onions.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "First, caramelize the onions.");
   });
 
@@ -158,6 +171,7 @@ suite("Unit Tests", () => {
       "I spent the bank holiday at the funfair.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "I spent the public holiday at the carnival."
@@ -170,6 +184,7 @@ suite("Unit Tests", () => {
       "I had a bicky then went to the chippy.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "I had a cookie then went to the fish-and-chip shop."
@@ -182,6 +197,7 @@ suite("Unit Tests", () => {
       "I've just got bits and bobs in my bum bag.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "I've just got odds and ends in my fanny pack."
@@ -194,6 +210,7 @@ suite("Unit Tests", () => {
       "The car boot sale at Boxted Airfield was called off.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "The swap meet at Boxted Airfield was called off."
@@ -206,6 +223,7 @@ suite("Unit Tests", () => {
       "Have you met Mrs Kalyani?",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(translation.translation, "Have you met Mrs. Kalyani?");
   });
 
@@ -215,6 +233,7 @@ suite("Unit Tests", () => {
       "Prof Joyner of King's College, London.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "Prof. Joyner of King's College, London."
@@ -226,6 +245,7 @@ suite("Unit Tests", () => {
       "Tea time is usually around 4 or 4.30.",
       "british-to-american"
     );
+    translation.translation = unwrapSpanTag(translation.translation);
     assert.equal(
       translation.translation,
       "Tea time is usually around 4 or 4:30."
@@ -238,12 +258,9 @@ suite("Unit Tests", () => {
       "Mangoes are my favorite fruit.",
       "american-to-british"
     );
-    assert.equal(translation.translation, "Mangoes are my favourite fruit.");
-    for (let word of translation.translatedPhrases)
-      assert.include(
-        wrapSpanTag(translation.translation, translation.translatedPhrases),
-        `<span class="highlight">` + word + "</span>"
-      );
+    assert.isTrue(
+      /(<span class="highlight">|<\/span>)/.test(translation.translation)
+    );
   });
 
   //#22
@@ -252,12 +269,9 @@ suite("Unit Tests", () => {
       "I ate yogurt for breakfast.",
       "american-to-british"
     );
-    assert.equal(translation.translation, "I ate yoghurt for breakfast.");
-    for (let word of translation.translatedPhrases)
-      assert.include(
-        wrapSpanTag(translation.translation, translation.translatedPhrases),
-        `<span class="highlight">` + word + "</span>"
-      );
+    assert.isTrue(
+      /(<span class="highlight">|<\/span>)/.test(translation.translation)
+    );
   });
 
   //#23
@@ -266,15 +280,9 @@ suite("Unit Tests", () => {
       "We watched the footie match for a while.",
       "british-to-american"
     );
-    assert.equal(
-      translation.translation,
-      "We watched the soccer match for a while."
+    assert.isTrue(
+      /(<span class="highlight">|<\/span>)/.test(translation.translation)
     );
-    for (let word of translation.translatedPhrases)
-      assert.include(
-        wrapSpanTag(translation.translation, translation.translatedPhrases),
-        `<span class="highlight">` + word + "</span>"
-      );
   });
 
   //#24
@@ -283,14 +291,8 @@ suite("Unit Tests", () => {
       "Paracetamol takes up to an hour to work.",
       "british-to-american"
     );
-    assert.equal(
-      translation.translation,
-      "Tylenol takes up to an hour to work."
+    assert.isTrue(
+      /(<span class="highlight">|<\/span>)/.test(translation.translation)
     );
-    for (let word of translation.translatedPhrases)
-      assert.include(
-        wrapSpanTag(translation.translation, translation.translatedPhrases),
-        `<span class="highlight">` + word + "</span>"
-      );
   });
 });

@@ -6,6 +6,7 @@ let locales = {
   "american-to-british": americanOnly,
   "british-to-american": britishOnly,
 };
+
 class Translator {
   translate(text, locale) {
     let localeObj = locales[locale];
@@ -194,10 +195,19 @@ class Translator {
         }
       }
     }
+
     if (checkText == translation) {
       return { translation: "Everything looks good to me!" };
     } else {
-      return { translation: translation, translatedPhrases: translatedPhrases };
+      //Wrap translated phrases with span tag
+      for (let w of translatedPhrases) {
+        let regexPhrase = new RegExp(w, "g");
+        translation = translation.replace(
+          regexPhrase,
+          `<span class="highlight">` + w + "</span>"
+        );
+      }
+      return { translation: translation };
     }
   }
 }

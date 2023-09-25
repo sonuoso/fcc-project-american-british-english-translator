@@ -21,9 +21,11 @@ suite("Functional Tests", () => {
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.property(res.body, "translation");
-        assert.property(res.body, "translatedPhrases");
-        assert.typeOf(res.body.translatedPhrases, "array");
-        assert.equal(res.body.translation, "Mangoes are my favourite fruit.");
+        let translation = res.body.translation.replace(
+          /(<span class="highlight">|<\/span>)/g,
+          ""
+        );
+        assert.equal(translation, "Mangoes are my favourite fruit.");
         done();
       });
   });
